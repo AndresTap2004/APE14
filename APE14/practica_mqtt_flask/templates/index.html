@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitor MQTT ESP32</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .card {
+            background: white;
+            width: 360px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #temperatura {
+            font-size: 48px;
+            color: #0077cc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Temperatura ESP32</h1>
+        <div id="temperatura">Cargando...</div>
+        <p>Tópico: esp32/temperatura</p>
+    </div>
+
+    <script>
+        async function actualizarTemperatura() {
+            const respuesta = await fetch("/api/temperatura");
+            const datos = await respuesta.json();
+            document.getElementById("temperatura").innerText = datos.temperatura + " °C";
+        }
+
+        setInterval(actualizarTemperatura, 1000);
+        actualizarTemperatura();
+    </script>
+</body>
+</html>
